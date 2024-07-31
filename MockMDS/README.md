@@ -14,5 +14,4 @@ Execute the below command to build module:
 mvn clean install
 ```
 
-`run.sh / run.bat` executable can be found under target folder.  Or run Main class `io.mosip.mock.sbi.test.TestMockSBI` directly.
-
+`run.sh / run.bat` executable can be found under target folder.  Or run Main class `io.mosip.mock.sbi.test.TestMockSBI` directl
