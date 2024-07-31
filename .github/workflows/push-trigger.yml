@@ -201,14 +201,58 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
         if: failure() # Pick up events even if the job fails or is canceled.
 
+  # build-dockers-MockMDS:
+  #   needs: build-maven-MockMDS
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - SERVICE_LOCATION: ./MockMDS
+  #           SERVICE_NAME: 'mockmds'
+  #           BUILD_ARTIFACT: 'mockmds-local'
+  #     fail-fast: false
+  #   name: ${{ matrix.SERVICE_NAME }}
+  #   uses: mosip/kattu/.github/workflows/docker-build.yml@master
+  #   with:
+  #     SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
+  #     SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
+  #     BUILD_ARTIFACT: ${{ matrix.BUILD_ARTIFACT }}
+  #   secrets:
+  #     DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
+  #     ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
+  #     RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
+  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+  build-dockers_mockmds:
+    needs: build-mockmds-local
+    strategy:
+      matrix:
+        include:
+          - SERVICE_LOCATION: 'MockMDS'
+            SERVICE_NAME: 'mockmds'
+            BUILD_ARTIFACT: 'mockmds-local'
+            ONLY_DOCKER: true
+      fail-fast: false
+    name: ${{ matrix.SERVICE_NAME }}
+    uses: mosip/kattu/.github/workflows/docker-build.yml@master
+    with:
+      SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
+      SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
+      BUILD_ARTIFACT: ${{ matrix.BUILD_ARTIFACT }}
+      ONLY_DOCKER: ${{ matrix.ONLY_DOCKER }}
+    secrets:
+      DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
+      ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
+      RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
   build-dockers-MockMDS:
     needs: build-maven-MockMDS
     strategy:
       matrix:
         include:
-          - SERVICE_LOCATION: ./MockMDS
+          - SERVICE_LOCATION: 'MockMDS'
             SERVICE_NAME: 'mockmds'
-            BUILD_ARTIFACT: 'mockmds-local'
+            BUILD_ARTIFACT: 'mockmds'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
