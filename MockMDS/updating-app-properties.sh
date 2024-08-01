@@ -17,7 +17,7 @@ fi
 pwd
 
 # Define the properties file path
-PROPERTIES_FILE="application.properties"
+PROPERTIES_FILE="/target/application.properties"
 
 # Check if the properties file exists
 if [ ! -f "$PROPERTIES_FILE" ]; then
