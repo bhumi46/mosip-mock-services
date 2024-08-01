@@ -25,9 +25,15 @@ if [ ! -f "$PROPERTIES_FILE" ]; then
   exit 1
 fi
 
-# Update the properties file
-if ! sed -i "s|^mosip.auth.server.url=.*|mosip.auth.server.url=https://$API_INTERNAL_HOST/v1/authmanager/authenticate/clientidsecretkey|" "$PROPERTIES_FILE"; then
-  echo "Error: Failed to update mosip.auth.server.url in '$PROPERTIES_FILE'"
+# # Update the properties file
+# if ! sed -i "s|^mosip.auth.server.url=.*|mosip.auth.server.url=https://$API_INTERNAL_HOST/v1/authmanager/authenticate/clientidsecretkey|" "$PROPERTIES_FILE"; then
+#   echo "Error: Failed to update mosip.auth.server.url in '$PROPERTIES_FILE'"
+#   exit 1
+# fi
+
+# Replace $API_INTERNAL_HOST placeholder with its value
+if ! sed -i "s|\$API_INTERNAL_HOST|$API_INTERNAL_HOST|g" "$PROPERTIES_FILE"; then
+  echo "Error: Failed to update $API_INTERNAL_HOST in '$PROPERTIES_FILE'"
   exit 1
 fi
 
@@ -36,9 +42,9 @@ if ! sed -i "s|^mosip.auth.secretkey=.*|mosip.auth.secretkey=$mosip_regproc_clie
   exit 1
 fi
 
-if ! sed -i "s|^mosip.ida.server.url=.*|mosip.ida.server.url=https://$API_INTERNAL_HOST/idauthentication/v1/internal/getCertificate?applicationId=IDA&referenceId=IDA-FIR|" "$PROPERTIES_FILE"; then
-  echo "Error: Failed to update mosip.ida.server.url in '$PROPERTIES_FILE'"
-  exit 1
-fi
+# if ! sed -i "s|^mosip.ida.server.url=.*|mosip.ida.server.url=https://$API_INTERNAL_HOST/idauthentication/v1/internal/getCertificate?applicationId=IDA&referenceId=IDA-FIR|" "$PROPERTIES_FILE"; then
+#   echo "Error: Failed to update mosip.ida.server.url in '$PROPERTIES_FILE'"
+#   exit 1
+# fi
 
 echo "Properties file updated successfully."
