@@ -18,7 +18,7 @@ echo -e "\n\n=========================== PACKAGING AND UPLOADING ===============
 
 # Zip the target, p12 certificates, and application.properties
 echo -e "\nPackaging files into mockmds.zip..."
-zip -r $work_dir/mockmds.zip $work_dir/target $work_dir/MockMDS/target $work_dir/certs/ $work_dir/application.properties $work_dir/'Biometric Devices'
+zip -r $work_dir/mockmds.zip $work_dir/target $work_dir/MockMDS/* $work_dir/certs/ $work_dir/application.properties $work_dir/'Biometric Devices'
 
 echo -e "\n\n=========================== CONFIGURING MINIO CLIENT ================================================\n"
 # Configure mc client
