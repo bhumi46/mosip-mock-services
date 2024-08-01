@@ -43,7 +43,7 @@ COPY application.properties $work_dir/
 COPY ["Biometric Devices", "$work_dir/Biometric Devices"]
 COPY entrypoint.sh $work_dir
 COPY ./MockMDS/target $work_dir/target
-COPY ./target $work_dir/target
+#COPY ./target $work_dir/target
 COPY *.sh openssl.cnf $work_dir
 
 # Set executable permissions for scripts

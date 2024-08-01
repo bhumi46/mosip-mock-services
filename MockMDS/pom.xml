@@ -365,7 +365,7 @@
 					</execution>
 				</executions>
 			</plugin>
-            <plugin>
+            <!-- <plugin>
                     <groupId>org.apache.maven.plugins</groupId>	
                     <artifactId>maven-antrun-plugin</artifactId>					
                     <version>3.0.0</version>					
@@ -378,13 +378,12 @@
                             </goals>
                             <configuration>
                                     <target>
-                                            <!-- Create a shell script to run the JAR file with executable permission -->
                                             <chmod file="${project.build.directory}/*.jar" perm="ugo+rx"/>
                                     </target>
                             </configuration>
                         </execution>
                     </executions>
-            </plugin>
+            </plugin> -->
 <!--  
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
