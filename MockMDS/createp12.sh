@@ -16,6 +16,11 @@ declare -a TARGET_FILES=(
     "$work_dir/target/Biometric Devices/Iris/Double/Keys/mosipirisdouble.p12"
     "$work_dir/target/Biometric Devices/Iris/Single/Keys/mosipirissingle.p12"
     "$work_dir/target/Biometric Devices/Face/Keys/mosipface.p12"
+    "$work_dir/Biometric Devices/Finger/Single/Keys/mosipfingersingle.p12"
+    "$work_dir/Biometric Devices/Finger/Slap/Keys/mosipfingerslap.p12"
+    "$work_dir/Biometric Devices/Iris/Double/Keys/mosipirisdouble.p12"
+    "$work_dir/Biometric Devices/Iris/Single/Keys/mosipirissingle.p12"
+    "$work_dir/Biometric Devices/Face/Keys/mosipface.p12"
 )
 
 # Loop through each target file and copy the new Device.p12
