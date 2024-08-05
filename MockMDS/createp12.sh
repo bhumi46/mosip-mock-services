@@ -8,7 +8,7 @@ echo -e "\n========== Creating Device keys and export to keystore =========="
 openssl genrsa -out "$CERT_LOCATION/Device.key" 4096
 openssl req -new -key "$CERT_LOCATION/Device.key" -out "$CERT_LOCATION/Device.csr" -subj "/C=$COUNTRY/ST=$STATE/L=$LOCATION/O=Device/OU=Device/CN=Device/"
 openssl x509 -req -extensions usr_cert -extfile ./openssl.cnf -days 180 -in "$CERT_LOCATION/Device.csr" -CA "$CERT_LOCATION/mosip-signed-client.crt" -CAkey "$CERT_LOCATION/Client.key" -set_serial 05 -out "$CERT_LOCATION/signed-Device.crt"
-openssl pkcs12 -export -in "$CERT_LOCATION/signed-Device.crt" -inkey "$CERT_LOCATION/Device.key" -out "$CERT_LOCATION/Device.p12" -name "Device" -password pass:$KEYSTORE_PWD
+openssl pkcs12 -export -in "$CERT_LOCATION/signed-Device.crt" -inkey "$CERT_LOCATION/Device.key" -out "$CERT_LOCATION/Device.p12" -name "Device" -password pass:$keystore_pwd
 echo "Device certificate created and exported to Device.p12"
 
 echo -e "\n========== Replacing old .p12 files with new Device.p12 =========="
