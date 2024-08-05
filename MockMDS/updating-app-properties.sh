@@ -18,7 +18,7 @@ PROPERTIES_FILE="target/application.properties"
 # Update the placeholders in the application.properties file
 sed -i "s|\$API_INTERNAL_HOST|$API_INTERNAL_HOST|g" $PROPERTIES_FILE
 sed -i "s|\$mosip_regproc_client_secret|$mosip_regproc_client_secret|g" $PROPERTIES_FILE
-sed -i "s|\$KEYSTORE_PWD|$KEYSTORE_PWD|g" $PROPERTIES_FILE
+sed -i "s|\$KEYSTORE_PWD|$keystore_pwd|g" $PROPERTIES_FILE
 
 echo "application.properties updated successfully."
 
