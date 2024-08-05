@@ -66,6 +66,7 @@ ENV CA= \
     mosip-api-internal-host= \
     mosip_regproc_client_secret= \
     mosip_deployment_client_secret= \
+    KEYSTORE_PWD= \
     s3-host= \
     s3-region= \
     s3-user-key= \

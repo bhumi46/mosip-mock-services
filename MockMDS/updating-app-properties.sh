@@ -1,50 +1,26 @@
 #!/bin/bash
 
-# Enable strict mode for better error handling
-set -euo pipefail
+# Define the placeholders and their respective runtime values from environment variables
+#MOSIP_REGPROC_CLIENT_SECRET=${MOSIP_REGPROC_CLIENT_SECRET}
+#KEYSTORE_PWD=${KEYSTORE_PWD}
 
-# Retrieve API_INTERNAL_HOST from Kubernetes ConfigMap
-API_INTERNAL_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-api-internal-host})
+# Fetch API_INTERNAL_HOST from Kubernetes ConfigMap
+API_INTERNAL_HOST=$(kubectl get cm global -o jsonpath='{.data.mosip-api-internal-host}')
 
-echo $API_INTERNAL_HOST
-
-# Ensure required environment variables are set
-if [ -z "${API_INTERNAL_HOST:-}" ] || [ -z "${mosip_regproc_client_secret:-}" ]; then
-  echo "Error: Environment variables API_INTERNAL_HOST and mosip_regproc_client_secret must be set."
-  exit 1
-fi
+# Print the fetched API_INTERNAL_HOST for verification
+echo "API_INTERNAL_HOST: $API_INTERNAL_HOST"
 
 pwd
 
-# Define the properties file path
-PROPERTIES_FILE="application.properties"
+# Path to your application.properties file
+PROPERTIES_FILE="target/application.properties"
 
-# Check if the properties file exists
-if [ ! -f "$PROPERTIES_FILE" ]; then
-  echo "Error: Properties file '$PROPERTIES_FILE' not found!"
-  exit 1
-fi
+# Update the placeholders in the application.properties file
+sed -i "s|\$API_INTERNAL_HOST|$API_INTERNAL_HOST|g" $PROPERTIES_FILE
+sed -i "s|\$mosip_regproc_client_secret|$mosip_regproc_client_secret|g" $PROPERTIES_FILE
+sed -i "s|\$KEYSTORE_PWD|$KEYSTORE_PWD|g" $PROPERTIES_FILE
 
-# Update the properties file
-if ! sed -i "s|^mosip.auth.server.url=.*|mosip.auth.server.url=https://$API_INTERNAL_HOST/v1/authmanager/authenticate/clientidsecretkey|" "$PROPERTIES_FILE"; then
-  echo "Error: Failed to update mosip.auth.server.url in '$PROPERTIES_FILE'"
-  exit 1
-fi
+echo "application.properties updated successfully."
 
-# # Replace $API_INTERNAL_HOST placeholder with its value
-# if ! sed -i "s|\$API_INTERNAL_HOST|$API_INTERNAL_HOST|g" "$PROPERTIES_FILE"; then
-#   echo "Error: Failed to update $API_INTERNAL_HOST in '$PROPERTIES_FILE'"
-#   exit 1
-# fi
-
-if ! sed -i "s|^mosip.auth.secretkey=.*|mosip.auth.secretkey=$mosip_regproc_client_secret|" "$PROPERTIES_FILE"; then
-  echo "Error: Failed to update mosip.auth.secretkey in '$PROPERTIES_FILE'"
-  exit 1
-fi
-
-if ! sed -i "s|^mosip.ida.server.url=.*|mosip.ida.server.url=https://$API_INTERNAL_HOST/idauthentication/v1/internal/getCertificate?applicationId=IDA&referenceId=IDA-FIR|" "$PROPERTIES_FILE"; then
-  echo "Error: Failed to update mosip.ida.server.url in '$PROPERTIES_FILE'"
-  exit 1
-fi
-
-echo "Properties file updated successfully."
+# Optionally, print out the updated application.properties for verification
+cat $PROPERTIES_FILE
