@@ -2,7 +2,7 @@
 
 # Define the placeholders and their respective runtime values from environment variables
 #MOSIP_REGPROC_CLIENT_SECRET=${MOSIP_REGPROC_CLIENT_SECRET}
-#KEYSTORE_PWD=${KEYSTORE_PWD}
+keystore_pwd=mosip123
 
 # Fetch API_INTERNAL_HOST from Kubernetes ConfigMap
 API_INTERNAL_HOST=$(kubectl get cm global -o jsonpath='{.data.mosip-api-internal-host}')
